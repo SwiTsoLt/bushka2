@@ -6,11 +6,19 @@ import * as io from 'socket.io-client';
   providedIn: 'root',
 })
 export class WebSocketService {
-  private readonly uri: string = 'ws://localhost:3000';
+  private readonly uri: string = "";
   private socket: io.Socket;
 
   constructor() {
     this.socket = io.connect(this.uri);
+
+    const origin = window.location.href
+      .split("//")[1]
+      .split(":")[0]
+      .split("/")[0];
+    this.uri = window.location.href.includes("https")
+      ? `wss://${origin}`
+      : `ws://${origin}:3000`;
   }
 
   public listen(eventName: string): Observable<any> {
