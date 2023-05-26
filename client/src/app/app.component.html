@@ -1,4 +1,6 @@
 <div class="app">
   <h1>Test page</h1>
+  <input [(ngModel)]="message" type="text">
+  <button (click)="send()">send</button>
   <router-outlet></router-outlet>
 </div>
