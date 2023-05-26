@@ -1,6 +1,12 @@
 <div class="app">
   <h1>Test page</h1>
-  <input [(ngModel)]="message" type="text">
-  <button (click)="send()">send</button>
+  <p>Name: <input #name type="text"></p>
+  <p>Text: <input #text type="text"></p>
+  <button (click)="send(name.value, text.value)">send</button>
+  <div class="messageList">
+    <div class="message" *ngFor="let message of messageList | async" >
+      <p><strong>{{ message.name }}</strong>: {{ message.text }}</p>
+    </div>
+  </div>
   <router-outlet></router-outlet>
 </div>

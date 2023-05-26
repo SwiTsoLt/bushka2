@@ -6,19 +6,22 @@ import * as io from 'socket.io-client';
   providedIn: 'root',
 })
 export class WebSocketService {
-  private readonly uri: string = "";
+  private readonly uri: string = '';
   private socket: io.Socket;
 
   constructor() {
     this.socket = io.connect(this.uri);
+    this.uri = this.getUri();
+  }
 
+  private getUri(): string {
     const origin = window.location.href
-      .split("//")[1]
-      .split(":")[0]
-      .split("/")[0];
-    this.uri = window.location.href.includes("https")
+      .split('//')[1]
+      .split(':')[0]
+      .split('/')[0];
+    return window.location.href.includes('https')
       ? `wss://${origin}`
-      : `ws://${origin}:3000`;
+      : `ws://${origin}:4200`;
   }
 
   public listen(eventName: string): Observable<any> {
@@ -30,6 +33,6 @@ export class WebSocketService {
   }
 
   public emit(eventName: string, data: any): void {
-    this.socket.emit(eventName, { msg: data });
+    this.socket.emit(eventName, data);
   }
 }
